@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -30,6 +29,16 @@ class _RegisterState extends State<Register> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   )
+                ),
+              ),
+            ),
+            Container(
+              child: TextFormField(
+                decoration: InputDecoration(
+                    labelText: "Email",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    )
                 ),
               ),
             ),

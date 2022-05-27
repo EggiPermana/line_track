@@ -51,7 +51,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 150,),
                 Container(
-
                   alignment: Alignment.center,
                   child: ElevatedButton(
                     onPressed: (){},
@@ -62,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPrimary: const Color(0xFFFFFFFF),),
                   ),
                 ),
-                SizedBox(height: 10,).,
+                SizedBox(height: 10,),
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
