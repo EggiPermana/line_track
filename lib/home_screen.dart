@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:line_track/jadwal_item.dart';
-import 'package:project_eggi/jadwal_item.dart';
+import 'package:line_track/profil.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -47,15 +47,20 @@ class HomeContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: CircleAvatar(
-            child: Icon(Icons.person),
+         Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Profil()  ));
+    },
+            child: CircleAvatar(
+              child: Icon(Icons.person),
+            ),
           ),
         ),
          const SizedBox(height: 24,),
         Container(
-          height: 160,
+          height: 150,
           width: double.infinity,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -81,7 +86,7 @@ class HomeContent extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.only(left: 16.0, top: 38, bottom: 12),
           child: Text(
-            "History penumpang",
+            "Jadwal Kendaraan",
             style: TextStyle(fontSize: 15, color: Colors.black54, fontWeight: FontWeight.w500),
           ),
         ),

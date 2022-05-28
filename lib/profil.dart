@@ -10,6 +10,20 @@ class Profil extends StatefulWidget {
 class _ProfilState extends State<Profil> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: Colors.teal,
+      appBar: AppBar (
+        elevation: 0,
+        backgroundColor: Colors.teal,
+        leading: Icon(Icons.arrow_back_ios),
+        title: Text ("Profile"),
+        centerTitle: true,
+      ),
+      body: SafeArea(
+        child: Container(
+
+        ),
+      ),
+    );
   }
 }
