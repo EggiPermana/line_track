@@ -16,7 +16,12 @@ class _ProfilState extends State<Profil> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.teal,
-        leading: Icon(Icons.arrow_back_ios),
+        leading: InkWell(
+          onTap: (){
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.arrow_back_ios),
+        ),
         title: Text("Profile"),
         centerTitle: true,
       ),
@@ -112,7 +117,7 @@ class _ProfilState extends State<Profil> {
                       child: Text("Logout"),
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(300, 50),
-                        primary: const Color(0xFF0BAA97),
+                        primary: const Color(0xFFDC143C),
                         onPrimary: const Color(0xFFFFFFFF),
                       ),
                     ),
