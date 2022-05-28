@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               return Register();
                             }));
                           },
-                          child: Text("Register")),
+                          child:  Text("Register") ),
                     ],
                   ),
                 )

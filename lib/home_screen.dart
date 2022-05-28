@@ -51,8 +51,7 @@ class HomeContent extends StatelessWidget {
           padding: const EdgeInsets.all(20.0),
           child: InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Profil()  ));
-    },
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Profil()  ));},
             child: CircleAvatar(
               child: Icon(Icons.person),
             ),
