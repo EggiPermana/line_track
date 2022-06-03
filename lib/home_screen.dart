@@ -12,26 +12,32 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[200],
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Align(
-              alignment: AlignmentDirectional(0, -1),
-              child: Container(
-                width: double.infinity,
-                height: 240,
-                decoration: BoxDecoration(
-                  color: Colors.teal,
+    return WillPopScope(
+      onWillPop: () async {
+
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.grey[200],
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Align(
+                alignment: AlignmentDirectional(0, -1),
+                child: Container(
+                  width: double.infinity,
+                  height: 240,
+                  decoration: BoxDecoration(
+                    color: Colors.teal,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: HomeContent(),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: HomeContent(),
+              )
+            ],
+          ),
         ),
       ),
     );

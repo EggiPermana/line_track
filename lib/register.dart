@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:line_track/core/repository/repository.dart';
+import 'package:line_track/login.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -8,6 +10,11 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  TextEditingController nameControll = TextEditingController();
+  TextEditingController emailControll = TextEditingController();
+  TextEditingController passwordControll = TextEditingController();
+  final Repository repository = Repository();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +35,7 @@ class _RegisterState extends State<Register> {
             ),
             Container(
               child: TextFormField(
+                controller: nameControll,
                 decoration: InputDecoration(
                   labelText: "Nama",
                   border: OutlineInputBorder(
@@ -41,6 +49,7 @@ class _RegisterState extends State<Register> {
             ),
             Container(
               child: TextFormField(
+                controller: emailControll,
                 decoration: InputDecoration(
                     labelText: "Email",
                     border: OutlineInputBorder(
@@ -54,6 +63,7 @@ class _RegisterState extends State<Register> {
             ),
             Container(
               child: TextFormField(
+                controller: passwordControll,
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: "Password",
@@ -69,7 +79,9 @@ class _RegisterState extends State<Register> {
             Container(
               alignment: Alignment.center,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  registerSubmit(context);
+                },
                 child: Text("Register"),
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(300, 50),
@@ -83,4 +95,40 @@ class _RegisterState extends State<Register> {
       ),),
     );
   }
+  Future<void> registerSubmit(BuildContext ctx) async {
+    String name = nameControll.value.text;
+    String email = emailControll.value.text;
+    String password = passwordControll.value.text;
+    var response = await repository.registerRepo(name, email, password);
+
+    if (response.accessToken.isNotEmpty) {
+      try{
+        await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()));
+      } catch (e) {
+        print(response.message);
+      }
+    } else {
+      showErrorDialog('Error', response.message);
+    }
+  }
+
+  Future<void> showErrorDialog(String tittle, String message) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(tittle),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Ok'),
+          ),
+        ],
+      ),
+    );
+  }
+
 }
+
+

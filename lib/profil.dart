@@ -108,8 +108,8 @@ class _ProfilState extends State<Profil> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.fromLTRB(22, 200, 10, 10),
+                  Spacer(),
+                  Center(
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen() ));
@@ -122,6 +122,7 @@ class _ProfilState extends State<Profil> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 20,)
                 ],
               ),
             ),

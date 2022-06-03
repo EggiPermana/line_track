@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:line_track/core/repository/repository.dart';
 import 'package:line_track/home_screen.dart';
 import 'package:line_track/register.dart';
 
@@ -10,6 +11,19 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailControll = TextEditingController();
+  TextEditingController passwordControll = TextEditingController();
+  final Repository repository = Repository();
+  String email = '', password = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    emailControll = TextEditingController();
+    passwordControll = TextEditingController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,8 +50,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Container(
                   child: TextFormField(
+                    controller: emailControll,
                     decoration: InputDecoration(
-                        labelText: "Nama",
+                        labelText: "Email",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         )),
@@ -48,6 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Container(
                   child: TextFormField(
+                    controller: passwordControll,
                     obscureText: true,
                     decoration: InputDecoration(
                         labelText: "Password",
@@ -63,7 +79,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   alignment: Alignment.center,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen() ));
+                      loginSubmit(email, password, context);
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => HomeScreen()));
                     },
                     child: Text("Login"),
                     style: ElevatedButton.styleFrom(
@@ -88,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               return Register();
                             }));
                           },
-                          child:  Text("Register") ),
+                          child: Text("Register")),
                     ],
                   ),
                 )
@@ -96,6 +116,41 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Future<void> loginSubmit(String email, password, BuildContext ctx) async {
+    String email = emailControll.value.text;
+    String password = passwordControll.value.text;
+    var response = await repository.logInRepo(email, password);
+
+
+
+    if (response.accessToken.isNotEmpty) {
+      try {
+        await Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()));
+      } catch (e) {
+        print(response.message);
+      }
+    } else {
+      showErrorDialog('Error', response.message);
+    }
+  }
+
+  Future<void> showErrorDialog(String title, String message) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Ok'),
+          ),
+        ],
       ),
     );
   }
