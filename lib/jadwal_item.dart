@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:line_track/core/respon/response_jadwal.dart';
 import 'package:line_track/jadwal.dart';
 
 class JadwalItem extends StatelessWidget {
-  const JadwalItem({Key? key}) : super(key: key);
+  final Jadwal jadwal;
+  const JadwalItem({Key? key, required this.jadwal}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Jadwal() ));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => JadwalScreen(jadwal: jadwal,) ));
       },
       child: Container(
         height: 80,
@@ -28,12 +30,12 @@ class JadwalItem extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children:  [
                 Text(
-                  "Bondowoso - Maesan",
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                  '${jadwal.from} - ${jadwal.to}',
+                  style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
                 ),
-                Text("Hari ini, 08:00 - 10:00")
+                Text("${jadwal.day}, ${jadwal.startTime} - ${jadwal.endTime}")
               ],
             ),
             const Spacer(),

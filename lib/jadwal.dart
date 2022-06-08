@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:line_track/core/respon/response_jadwal.dart';
 
-class Jadwal extends StatefulWidget {
-  const Jadwal({Key? key}) : super(key: key);
+class JadwalScreen extends StatelessWidget {
+  final Jadwal jadwal;
+  const JadwalScreen({Key? key, required this.jadwal}) : super(key: key);
 
-  @override
-  State<Jadwal> createState() => _JadwalState();
-}
-
-class _JadwalState extends State<Jadwal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +25,7 @@ class _JadwalState extends State<Jadwal> {
         child: Container(
           child: Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0)
+                borderRadius: BorderRadius.circular(8.0)
             ),
             margin: EdgeInsets.fromLTRB(25, 25, 25, 25),
             child: Container(
@@ -38,12 +35,12 @@ class _JadwalState extends State<Jadwal> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                      padding: const EdgeInsets.only(top: 20, left: 20),
-                    child: Text("Bondowoso - Maesan"),
+                    padding: const EdgeInsets.only(top: 20, left: 20),
+                    child: Text('${jadwal.from} - ${jadwal.to}'),
                   ),
                   Padding(
-                      padding: const EdgeInsets.only(top: 20, left: 20),
-                  child: Text("Hari ini 08.00 - 10.00"),)
+                    padding: const EdgeInsets.only(top: 20, left: 20),
+                    child: Text('${jadwal.day} - ${jadwal.startTime} - ${jadwal.endTime}'),)
                 ],
               ),
             ),
@@ -53,3 +50,4 @@ class _JadwalState extends State<Jadwal> {
     );
   }
 }
+

@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
     String password = passwordControll.value.text;
     var response = await repository.logInRepo(email, password);
 
-
+    repository.writeSecureTokenData('Bearer ${response.accessToken}');
 
     if (response.accessToken.isNotEmpty) {
       try {

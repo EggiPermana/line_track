@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:line_track/core/repository/repository.dart';
+import 'package:line_track/core/respon/response_jadwal.dart';
 import 'package:line_track/jadwal_item.dart';
 import 'package:line_track/profil.dart';
 
@@ -10,11 +12,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late Repository _repository;
+  ResponseJadwal? _jadwals = null;
+
+  @override
+  void initState() {
+    super.initState();
+    _repository = Repository();
+    getJadwal();
+  }
+
+  void getJadwal() async {
+    _jadwals = await _repository.jadwalService();
+
+    setState(() {
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-
         return false;
       },
       child: Scaffold(
@@ -34,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
-                child: HomeContent(),
+                child: HomeContent(listJadwal: _jadwals?.data ?? []),
               )
             ],
           ),
@@ -45,7 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomeContent extends StatelessWidget {
-  const HomeContent({Key? key}) : super(key: key);
+  final List<Jadwal> listJadwal;
+
+  const HomeContent({Key? key, required this.listJadwal}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,30 +73,34 @@ class HomeContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-         Padding(
+        Padding(
           padding: const EdgeInsets.all(20.0),
           child: InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Profil()  ));},
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Profil()));
+            },
             child: CircleAvatar(
               child: Icon(Icons.person),
             ),
           ),
         ),
-         const SizedBox(height: 24,),
+        const SizedBox(
+          height: 24,
+        ),
         Container(
           height: 150,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8)
-          ),
+              color: Colors.white, borderRadius: BorderRadius.circular(8)),
           margin: const EdgeInsets.only(left: 16, right: 16, top: 16),
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
-              SizedBox(height: 18,),
+              SizedBox(
+                height: 18,
+              ),
               Text("Welcome"),
               Text(
                 "Nama Pengguna",
@@ -84,7 +108,9 @@ class HomeContent extends StatelessWidget {
               ),
               Spacer(),
               Text("Welcome"),
-              SizedBox(height: 18,)
+              SizedBox(
+                height: 18,
+              )
             ],
           ),
         ),
@@ -92,14 +118,19 @@ class HomeContent extends StatelessWidget {
           padding: EdgeInsets.only(left: 16.0, top: 38, bottom: 12),
           child: Text(
             "Jadwal Kendaraan",
-            style: TextStyle(fontSize: 15, color: Colors.black54, fontWeight: FontWeight.w500),
+            style: TextStyle(
+                fontSize: 15,
+                color: Colors.black54,
+                fontWeight: FontWeight.w500),
           ),
         ),
         Expanded(
           child: ListView.builder(
-              itemCount: 8,
+              itemCount: listJadwal.length,
               shrinkWrap: true,
-              itemBuilder: (ctx, index) => JadwalItem()),
+              itemBuilder: (ctx, index) => JadwalItem(
+                    jadwal: listJadwal[index],
+                  )),
         )
       ],
     );

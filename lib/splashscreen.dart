@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:line_track/core/repository/repository.dart';
+import 'package:line_track/home_screen.dart';
 import 'package:line_track/login.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -9,15 +11,24 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  navigatetohome()async{
-    await Future.delayed(Duration(seconds: 3),(){});
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
-  }
+  late Repository repository;
 
+  navigatetohome() async {
+    String token = await repository.readSecureData('token') ?? "";
+    await Future.delayed(Duration(seconds: 3), () {});
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      if (token.isEmpty) {
+        return LoginScreen();
+      } else {
+        return HomeScreen();
+      }
+    }));
+  }
 
   @override
   void initState() {
     super.initState();
+    repository = Repository();
     navigatetohome();
   }
 
@@ -25,10 +36,11 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Image.asset("assets/logosplashscreen.png",
-            height:120, ),
-      )
-      ,
+        child: Image.asset(
+          "assets/ANGKOTTT.png",
+          height: 120,
+        ),
+      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:line_track/core/repository/repository.dart';
 import 'package:line_track/login.dart';
 
 class Profil extends StatefulWidget {
@@ -9,6 +10,14 @@ class Profil extends StatefulWidget {
 }
 
 class _ProfilState extends State<Profil> {
+  late Repository _repository;
+
+  @override
+  void initState() {
+    super.initState();
+    _repository = Repository();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,6 +121,7 @@ class _ProfilState extends State<Profil> {
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
+                        _repository.writeSecureTokenData('');
                         Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen() ));
                       },
                       child: Text("Logout"),
