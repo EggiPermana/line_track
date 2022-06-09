@@ -101,7 +101,7 @@ class _RegisterState extends State<Register> {
     String password = passwordControll.value.text;
     var response = await repository.registerRepo(name, email, password);
 
-    if (response.accessToken.isNotEmpty) {
+    if (response.content.accessToken.isNotEmpty) {
       try{
         await Navigator.push(context,
         MaterialPageRoute(builder: (context) => const LoginScreen()));

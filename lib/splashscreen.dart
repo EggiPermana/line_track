@@ -36,11 +36,25 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Image.asset(
-          "assets/ANGKOTTT.png",
-          height: 120,
-        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              "assets/ANGKOTTT.png",
+              height: 120,
+            ),
+            Text("WELCOME TO", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontStyle:FontStyle.italic),),
+            Text("JADWALINE APPS", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontStyle:FontStyle.italic),),
+          ],
+        )
       ),
+    );
+
+    Scaffold(
+      body: Center(
+        child: Text("Welcome to"),
+      )
     );
   }
 }

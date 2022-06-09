@@ -11,58 +11,52 @@ String responseRegisterToJson(ResponseRegister data) => json.encode(data.toJson(
 
 class ResponseRegister {
   ResponseRegister({
+    required this.status,
     required this.message,
-    required this.data,
+    required this.error,
+    required this.content,
+  });
+
+  final String status;
+  final String message;
+  final dynamic error;
+  final Content content;
+
+  factory ResponseRegister.fromJson(Map<String, dynamic> json) => ResponseRegister(
+    status: json["status"] == null ? null : json["status"],
+    message: json["message"] == null ? null : json["message"],
+    error: json["error"],
+    content: Content.fromJson(json["content"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "status": status == null ? null : status,
+    "message": message == null ? null : message,
+    "error": error,
+    "content": content == null ? null : content.toJson(),
+  };
+}
+
+class Content {
+  Content({
+    required this.code,
     required this.accessToken,
     required this.tokenType,
   });
 
-  final String message;
-  final Data? data;
+  final int code;
   final String accessToken;
   final String tokenType;
 
-  factory ResponseRegister.fromJson(Map<String, dynamic> json) => ResponseRegister(
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
-    accessToken: json["access_token"] == null ? "" : json["access_token"],
-    tokenType: json["token_type"] == null ? "" : json["token_type"], message: '',
+  factory Content.fromJson(Map<String, dynamic> json) => Content(
+    code: json["code"] == null ? null : json["code"],
+    accessToken: json["access_token"] == null ? null : json["access_token"],
+    tokenType: json["token_type"] == null ? null : json["token_type"],
   );
 
   Map<String, dynamic> toJson() => {
-    "data": data == null ? null : data?.toJson(),
+    "code": code == null ? null : code,
     "access_token": accessToken == null ? null : accessToken,
     "token_type": tokenType == null ? null : tokenType,
-  };
-}
-
-class Data {
-  Data({
-    required this.name,
-    required this.email,
-    required this.updatedAt,
-    required this.createdAt,
-    required this.id,
-  });
-
-  final String name;
-  final String email;
-  final DateTime? updatedAt;
-  final DateTime? createdAt;
-  final int id;
-
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    name: json["name"] == null ? null : json["name"],
-    email: json["email"] == null ? null : json["email"],
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    id: json["id"] == null ? null : json["id"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "name": name == null ? null : name,
-    "email": email == null ? null : email,
-    "updated_at": updatedAt == null ? null : updatedAt?.toIso8601String(),
-    "created_at": createdAt == null ? null : createdAt?.toIso8601String(),
-    "id": id == null ? null : id,
   };
 }
