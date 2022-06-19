@@ -11,11 +11,21 @@ class Profil extends StatefulWidget {
 
 class _ProfilState extends State<Profil> {
   late Repository _repository;
+  String email = "" ;
 
   @override
   void initState() {
     super.initState();
     _repository = Repository();
+    getEmail();
+  }
+
+  void getEmail() async {
+    email = await _repository.readSecureData('email') ?? "";
+    print("EMAILNYA EGGE ADAlah $email");
+    setState(() {
+
+    });
   }
 
   @override
@@ -62,28 +72,6 @@ class _ProfilState extends State<Profil> {
                   SizedBox(
                     height: 18,
                   ),
-                  Center(
-                    child: Text(
-                      "Pengguna",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text(
-                      "Email Address",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0, top: 10),
                     child: Text(
@@ -97,20 +85,7 @@ class _ProfilState extends State<Profil> {
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0, top: 30),
                     child: Text(
-                      "Username",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text(
-                      "Nama Pengguna",
+                      email,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -121,7 +96,7 @@ class _ProfilState extends State<Profil> {
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
-                        _repository.writeSecureTokenData('');
+                        _repository.writeSecureTokenData('token' , '');
                         Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen() ));
                       },
                       child: Text("Logout"),

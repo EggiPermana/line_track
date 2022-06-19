@@ -14,12 +14,22 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late Repository _repository;
   ResponseJadwal? _jadwals = null;
+  String email = "" ;
 
   @override
   void initState() {
     super.initState();
     _repository = Repository();
     getJadwal();
+    getEmail();
+  }
+
+  void getEmail() async {
+    email = await _repository.readSecureData('email') ?? "";
+    print("EMAILNYA EGGE ADAlah $email");
+    setState(() {
+
+    });
   }
 
   void getJadwal() async {
@@ -41,18 +51,18 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Stack(
             children: [
               Align(
-                alignment: AlignmentDirectional(0, -1),
+                alignment: const AlignmentDirectional(0, -1),
                 child: Container(
                   width: double.infinity,
                   height: 240,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.teal,
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
-                child: HomeContent(listJadwal: _jadwals?.data ?? []),
+                child: HomeContent(listJadwal: _jadwals?.data ?? [], email: email),
               )
             ],
           ),
@@ -64,8 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class HomeContent extends StatelessWidget {
   final List<Jadwal> listJadwal;
-
-  const HomeContent({Key? key, required this.listJadwal}) : super(key: key);
+  final String email;
+  const HomeContent({Key? key, required this.listJadwal, required this.email}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -78,10 +88,10 @@ class HomeContent extends StatelessWidget {
           child: InkWell(
             onTap: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Profil()));
+                  context, MaterialPageRoute(builder: (context) => const Profil()));
             },
-            child: CircleAvatar(
-              child: Icon(Icons.person),
+            child: const CircleAvatar(
+              child: const Icon(Icons.person),
             ),
           ),
         ),
@@ -97,20 +107,16 @@ class HomeContent extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              SizedBox(
+            children:  [
+              const SizedBox(
                 height: 18,
               ),
-              Text("Welcome"),
+              const Text("Welcome"),
               Text(
-                "Nama Pengguna",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                email,
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
               ),
-              Spacer(),
-              Text("Welcome"),
-              SizedBox(
-                height: 18,
-              )
+              const Spacer(),
             ],
           ),
         ),

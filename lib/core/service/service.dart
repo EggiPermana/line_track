@@ -73,9 +73,9 @@ class Service {
     return readData;
   }
 
-  Object writeSecureTokenData( String value) {
+  Object writeSecureTokenData(String key, String value) {
     final storage = const FlutterSecureStorage();
-    var writeData = storage.write(key: 'token', value: value);
+    var writeData = storage.write(key: key, value: value);
     return writeData;
   }
 
